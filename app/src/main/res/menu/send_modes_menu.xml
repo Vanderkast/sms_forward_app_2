@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mode_plain_email"
+        android:title="@string/mode_plain_email" />
+    <item
+        android:id="@+id/mode_csv_email"
+        android:title="@string/mode_csv_email" />
+    <item
+        android:id="@+id/mode_server_1c"
+        android:title="@string/mode_server_1c" />
+</menu>

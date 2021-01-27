@@ -2,9 +2,10 @@ package com.vanderkast.smsforwardapp.helper.handling;
 
 @FunctionalInterface
 public interface Finisher<T> {
-    Result proceed(T data);
+    Result finish(T data);
 
     enum Result {
-        DONE,
+        SUCCESS,
+        ERROR
     }
 }

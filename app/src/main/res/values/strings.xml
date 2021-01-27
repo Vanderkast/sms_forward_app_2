@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">SmsForwardApp</string>
+    <string name="email_preference">com.vanderkast.smsforward.email_preference</string>
+    <string name="phone_preference">com.vanderkast.smsforward.phone_preference</string>
+
+    <string name="app_name">Sms Forward</string>
+    <string name="phone_hint">Номер смс истории</string>
+    <string name="save_phone">Сохранить номер</string>
+    <string name="save_email">Сохранить адрес почты</string>
+    <string name="send_to_email">Отправить</string>
+    <string name="email_hint">Адрес почты</string>
+    <string name="set_date">Установить дату</string>
+    <string name="date_hint">Дата</string>
+    <string name="sending_complete_successfully">Сообщения успешно обработаны и отправлены.</string>
+    <string name="sending_gone_wrong">Во время работы произошел сбой</string>
+    <string name="send_as_csv">отправить .csv файлом</string>
+    <string name="send_via_http">Отправить на сервер 1С</string>
+    <string name="send_as_button_text">Отправить как</string>
+
+    <string name="mode_plain_email">Отправить email с текстом</string>
+    <string name="mode_csv_email">Отправить email с .csv файлом</string>
+    <string name="mode_server_1c">Отправить на сервер 1С</string>
+    <string name="no_permission_granted">Выдайте разрешение на чтнеие смс в настройках</string>
 </resources>

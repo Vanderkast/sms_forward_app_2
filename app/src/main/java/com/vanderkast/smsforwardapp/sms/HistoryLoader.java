@@ -1,4 +1,4 @@
-package com.vanderkast.smsforwardapp.sms.handler2;
+package com.vanderkast.smsforwardapp.sms;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -21,7 +21,7 @@ public final class HistoryLoader implements Handler<String, Cursor> {
         return context.getContentResolver()
                 .query(
                         uriSms,
-                        new String[]{ "address", "date", "body"},
+                        new String[]{"address", "date", "body"},
                         "address=?",
                         new String[]{number},
                         null);

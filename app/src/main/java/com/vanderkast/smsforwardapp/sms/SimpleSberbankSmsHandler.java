@@ -1,4 +1,4 @@
-package com.vanderkast.smsforwardapp.sms.handlers;
+package com.vanderkast.smsforwardapp.sms;
 
 import android.annotation.SuppressLint;
 
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-public class SimpleSberbankSmsHandler implements Handler<List<Pair<Date, String>>, String> {
+public final class SimpleSberbankSmsHandler implements Handler<List<Pair<Date, String>>, String> {
 
     @Inject
     public SimpleSberbankSmsHandler() {

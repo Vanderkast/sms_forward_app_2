@@ -11,6 +11,6 @@ public interface HandlerChain<T> {
     T get();
 
     default Finisher.Result finish(Finisher<? super T> finisher) {
-        return finisher.proceed(get());
+        return finisher.finish(get());
     }
 }

@@ -1,4 +1,4 @@
-package com.vanderkast.smsforwardapp.sms.handler2;
+package com.vanderkast.smsforwardapp.sms;
 
 import android.annotation.SuppressLint;
 
@@ -12,7 +12,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public final class HistoryToEmail implements Handler<List<Pair<Date, String>>, String> {
+public final class HistoryToEmailText implements Handler<List<Pair<Date, String>>, String> {
+
+    @Inject
+    public HistoryToEmailText() {
+    }
 
     @SuppressLint("SimpleDateFormat")
     public String handle(List<Pair<Date, String>> history) {

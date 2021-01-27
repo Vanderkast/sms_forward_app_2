@@ -321,3 +321,5 @@ app/src/main/java/com/vanderkast/smsforward/email_handler/EmailData.java
 
 !lib/*.jar
 EmailInfo.java
+app/src/main/java/com/vanderkast/smsforwardapp/di/Settings.java
+Settings.java
