@@ -2,8 +2,12 @@ package com.vanderkast.smsforwardapp.di;
 
 import android.content.Context;
 
+import com.vanderkast.smsforwardapp.MainActivity;
 import com.vanderkast.smsforwardapp.email.EmailSender;
 import com.vanderkast.smsforwardapp.email.GMailSender;
+import com.vanderkast.smsforwardapp.extension.ErrorKeeper;
+import com.vanderkast.smsforwardapp.extension.PreferenceErrorKeeper;
+import com.vanderkast.smsforwardapp.extension.StringPreference;
 import com.vanderkast.smsforwardapp.network.Api;
 import com.vanderkast.smsforwardapp.sms.SmsDateFilter;
 
@@ -45,5 +49,10 @@ public class DependencyProvider {
     @Provides
     public EmailSender sender(GMailSender sender) {
         return sender;
+    }
+
+    @Provides
+    public ErrorKeeper keeper() {
+        return new PreferenceErrorKeeper(new StringPreference(context.getSharedPreferences(MainActivity.PREFERENCES_NAME, Context.MODE_PRIVATE), "error"));
     }
 }

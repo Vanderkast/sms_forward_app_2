@@ -10,7 +10,7 @@ public interface HandlerChain<T> {
 
     T get();
 
-    default Finisher.Result finish(Finisher<? super T> finisher) {
+    default Result finish(Finisher<? super T> finisher) {
         return finisher.finish(get());
     }
 }

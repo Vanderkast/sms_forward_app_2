@@ -2,6 +2,8 @@ package com.vanderkast.smsforwardapp.di;
 
 import com.vanderkast.smsforwardapp.email.EmailSender;
 import com.vanderkast.smsforwardapp.email.SendEmailFinisher;
+import com.vanderkast.smsforwardapp.extension.ErrorKeeper;
+import com.vanderkast.smsforwardapp.helper.handling.ErrorResult;
 import com.vanderkast.smsforwardapp.network.Api;
 import com.vanderkast.smsforwardapp.network.SendHistoryToServer;
 import com.vanderkast.smsforwardapp.sms.HistoryLoader;
@@ -16,7 +18,7 @@ import java.util.function.Function;
 import dagger.Component;
 
 @Component(modules = DependencyProvider.class)
-public interface MainComponent {
+public interface MainComponent { //todo: divide on sub-components
     HistoryLoader historyLoader();
 
     SmsHistoryReader historyReader();
@@ -36,4 +38,6 @@ public interface MainComponent {
     EmailSender emailSender();
 
     SendEmailFinisher sendEmail();
+
+    ErrorKeeper errorKeeper();
 }

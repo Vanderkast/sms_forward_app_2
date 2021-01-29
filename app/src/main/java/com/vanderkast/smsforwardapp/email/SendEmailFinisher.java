@@ -1,8 +1,12 @@
 package com.vanderkast.smsforwardapp.email;
 
+import com.vanderkast.smsforwardapp.R;
+import com.vanderkast.smsforwardapp.helper.handling.ErrorResult;
 import com.vanderkast.smsforwardapp.helper.handling.Finisher;
+import com.vanderkast.smsforwardapp.helper.handling.Result;
 
 import javax.inject.Inject;
+import javax.mail.MessagingException;
 
 public class SendEmailFinisher implements Finisher<EmailData> {
     private final EmailSender sender;
@@ -16,10 +20,11 @@ public class SendEmailFinisher implements Finisher<EmailData> {
     public Result finish(EmailData data) {
         try {
             sender.send(data);
-            return Result.SUCCESS;
+            return Result.success();
+        } catch (MessagingException e) {
+            return new ErrorResult(R.string.email_error, e);
         } catch (Exception e) {
-            e.printStackTrace();
-            return Result.ERROR;
+            return new ErrorResult(R.string.unknown_email_error, e);
         }
     }
 }

@@ -1,7 +1,10 @@
 package com.vanderkast.smsforwardapp.network;
 
+import com.vanderkast.smsforwardapp.R;
 import com.vanderkast.smsforwardapp.di.Settings;
+import com.vanderkast.smsforwardapp.helper.handling.ErrorResult;
 import com.vanderkast.smsforwardapp.helper.handling.Finisher;
+import com.vanderkast.smsforwardapp.helper.handling.Result;
 
 import java.io.IOException;
 
@@ -19,10 +22,9 @@ public class SendHistoryToServer implements Finisher<String> {
     public Result finish(String data) {
         try {
             api.send(Settings.AUTHORIZATION, data).execute();
-            return Result.SUCCESS;
+            return Result.success();
         } catch (IOException e) {
-            e.printStackTrace();
-            return Result.ERROR;
+            return new ErrorResult(R.string.server_error, e);
         }
     }
 }

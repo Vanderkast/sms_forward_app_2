@@ -4,9 +4,12 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -28,11 +31,13 @@ import com.vanderkast.smsforwardapp.extension.KeepValueButtonImpl;
 import com.vanderkast.smsforwardapp.extension.Preference;
 import com.vanderkast.smsforwardapp.extension.StringPreference;
 import com.vanderkast.smsforwardapp.extension.ValueTextWatcher;
-import com.vanderkast.smsforwardapp.helper.MainTask;
+import com.vanderkast.smsforwardapp.helper.BackgroundExecutor;
+import com.vanderkast.smsforwardapp.helper.handling.Finisher;
 import com.vanderkast.smsforwardapp.model.Input;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.function.Supplier;
 
 import static com.vanderkast.smsforwardapp.helper.DateUtil.DATE_FORMAT;
 
@@ -63,6 +68,21 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
         setUpEmailRow();
         setUpDatePicker();
         setUpSendButton();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.error_details_menu){
+            Intent intent = new Intent(this, ErrorDetailsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //todo: remove code duplication in #setUpPhoneRow and #setUpEmailRow methods
@@ -144,10 +164,12 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
     }
 
     private void handle(Input.Mode mode) {
-        new MainTask(mainController).execute(new Input(phone.getText().toString(),
+        Supplier<Integer> supplier = () -> mainController.handle(new Input(phone.getText().toString(),
                 email.getText().toString(),
                 date.getText().toString(),
                 mode));
+        new BackgroundExecutor<>(supplier,
+                (result) -> runOnUiThread(() -> Snackbar.make(findViewById(R.id.main_coordinator_layout), getString(result), Snackbar.LENGTH_LONG).show())).start();
     }
 
     @Override

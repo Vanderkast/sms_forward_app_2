@@ -15,6 +15,7 @@ import javax.activation.FileDataSource;
 import javax.inject.Inject;
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -29,19 +30,15 @@ public class GMailSender extends Authenticator implements EmailSender {
         Security.addProvider(new JSSEProvider());
     }
 
-    private final String mailHost = "smtp.gmail.com";
-    private final String user;
-    private final String password;
+    private final String user = Settings.EMAIL_ADDRESS;
+    private final String password = Settings.EMAIL_PASSWORD;
     private final Session session;
 
     @Inject
     public GMailSender() {
-        this.user = Settings.EMAIL_ADDRESS;
-        this.password = Settings.EMAIL_PASSWORD;
-
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
-        props.setProperty("mail.host", mailHost);
+        props.setProperty("mail.host", "smtp.gmail.com");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -59,12 +56,14 @@ public class GMailSender extends Authenticator implements EmailSender {
 
     //todo: divide on send with/without attachment
     @Override
-    public void send(EmailData data) throws Exception {
+    public void send(EmailData data) throws MessagingException {
         MimeMessage message = new MimeMessage(session);
-        DataHandler handler = new DataHandler(new ByteArrayDataSource(data.getText().getBytes(), "text/plain"));
+        if (data.getText() != null) {
+            DataHandler handler = new DataHandler(new ByteArrayDataSource(data.getText().getBytes(), "text/plain"));
+            message.setDataHandler(handler);
+        }
         message.setSender(new InternetAddress(data.getRecipientAddress()));
         message.setSubject(data.getSubject());
-        message.setDataHandler(handler);
         if (data.getRecipientAddress().indexOf(',') > 0)
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(data.getRecipientAddress()));
         else
