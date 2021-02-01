@@ -1,5 +1,7 @@
 package com.vanderkast.smsforwardapp.helper.handling;
 
+import com.vanderkast.smsforwardapp.R;
+
 public class Result {
     public static final int NO_MESSAGE = -1;
 
@@ -16,7 +18,7 @@ public class Result {
     }
 
     public static Result success() {
-        return new Result(Type.SUCCESS, NO_MESSAGE);
+        return new Result(Type.SUCCESS, R.string.success);
     }
 
     public static Result failure(int message) {

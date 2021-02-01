@@ -11,24 +11,25 @@ import com.vanderkast.smsforwardapp.extension.StringPreference;
 import com.vanderkast.smsforwardapp.network.Api;
 import com.vanderkast.smsforwardapp.sms.SmsDateFilter;
 
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.function.Function;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 @Module
 public class DependencyProvider {
     private final Context context;
-    private final Retrofit retrofit;
+    private Retrofit retrofit;
 
     public DependencyProvider(Context context) {
         this.context = context;
-        retrofit = new Retrofit.Builder()
-                .baseUrl(Settings.SERVER_ADDRESS)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 
     @Provides
@@ -43,6 +44,11 @@ public class DependencyProvider {
 
     @Provides
     public Api api() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Settings.SERVER_ADDRESS)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
         return retrofit.create(Api.class);
     }
 

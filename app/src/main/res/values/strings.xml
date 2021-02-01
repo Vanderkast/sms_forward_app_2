@@ -24,4 +24,7 @@
     <string name="email_error">Ошибка при отправке email.</string>
     <string name="unknown_email_error">Неизвестная ошибка при отправке email.</string>
     <string name="error_details_menu">Ошибка</string>
+    <string name="sending_on_server_error">Не удалось отправить данные на сервер</string>
+    <string name="no_file_found_to_send">Не найден файл для отправки на сервер</string>
+    <string name="success">Данные успешно отправлены!</string>
 </resources>

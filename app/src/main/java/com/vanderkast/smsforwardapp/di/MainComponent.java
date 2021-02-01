@@ -3,6 +3,7 @@ package com.vanderkast.smsforwardapp.di;
 import com.vanderkast.smsforwardapp.email.EmailSender;
 import com.vanderkast.smsforwardapp.email.SendEmailFinisher;
 import com.vanderkast.smsforwardapp.extension.ErrorKeeper;
+import com.vanderkast.smsforwardapp.helper.FileHandler;
 import com.vanderkast.smsforwardapp.helper.handling.ErrorResult;
 import com.vanderkast.smsforwardapp.network.Api;
 import com.vanderkast.smsforwardapp.network.SendHistoryToServer;
@@ -34,6 +35,8 @@ public interface MainComponent { //todo: divide on sub-components
     Api api();
 
     SendHistoryToServer sendHistoryToServer();
+
+    FileHandler fileHandler();
 
     EmailSender emailSender();
 

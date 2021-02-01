@@ -16,6 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import static com.vanderkast.smsforwardapp.helper.DateUtil.DATE_FORMAT;
+import static com.vanderkast.smsforwardapp.helper.DateUtil.DATE_TIME_FORMAT;
 
 public final class SaveCsv implements Handler<List<Pair<Date, String>>, String> {
     public final static String CSV_FILE = "history.csv";
@@ -33,7 +34,7 @@ public final class SaveCsv implements Handler<List<Pair<Date, String>>, String> 
         try {
             String path = getPath(context);
             writer = new CSVWriter(new FileWriter(path, false));
-            history.forEach(pair -> writer.writeNext(new String[]{DATE_FORMAT.format(pair.first), pair.second}));
+            history.forEach(pair -> writer.writeNext(new String[]{DATE_TIME_FORMAT.format(pair.first), pair.second}));
             writer.close();
             return path;
         } catch (IOException e) {

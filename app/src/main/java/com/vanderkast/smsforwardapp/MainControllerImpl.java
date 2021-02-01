@@ -2,6 +2,7 @@ package com.vanderkast.smsforwardapp;
 
 import androidx.core.util.Pair;
 
+import com.google.gson.internal.$Gson$Types;
 import com.vanderkast.smsforwardapp.di.MainComponent;
 import com.vanderkast.smsforwardapp.email.EmailDataBuilder;
 import com.vanderkast.smsforwardapp.helper.handling.ErrorResult;
@@ -11,6 +12,7 @@ import com.vanderkast.smsforwardapp.model.Input;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class MainControllerImpl implements MainController {
     private final MainComponent component;
@@ -29,9 +31,14 @@ public class MainControllerImpl implements MainController {
                 .next(component.historyReader())
                 .next(component.smsDateFilter().apply(input.getDate()));
 
-        if (input.getMode().equals(Input.Mode.SERVER_1C))
-            return chain.next(component.historyToEmailText())
-                    .finish(component.sendHistoryToServer());
+        if (input.getMode().equals(Input.Mode.SERVER_1C)){
+            Optional<String> data = chain.next(component.saveCsv())
+                    .next(component.fileHandler())
+                    .get();
+            if(data.isPresent())
+                return component.sendHistoryToServer().finish(data.get());
+            else return Result.failure(R.string.no_file_found_to_send);
+        }
 
         EmailDataBuilder emailData = new EmailDataBuilder();
         emailData.setSubject("SMS " + input.getPhone() + " " + input.getDate());

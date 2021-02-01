@@ -8,6 +8,8 @@ import com.vanderkast.smsforwardapp.helper.handling.Result;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
 
+import retrofit2.Response;
+
 public class SendEmailFinisher implements Finisher<EmailData> {
     private final EmailSender sender;
 

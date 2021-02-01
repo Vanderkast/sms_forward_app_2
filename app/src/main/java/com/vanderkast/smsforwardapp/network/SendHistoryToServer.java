@@ -10,6 +10,8 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import retrofit2.Response;
+
 public class SendHistoryToServer implements Finisher<String> {
     private final Api api;
 
@@ -21,8 +23,8 @@ public class SendHistoryToServer implements Finisher<String> {
     @Override
     public Result finish(String data) {
         try {
-            api.send(Settings.AUTHORIZATION, data).execute();
-            return Result.success();
+            Response<Void> response = api.send(Settings.AUTHORIZATION, data).execute();
+            return response.code() == 200 ? Result.success() : Result.failure(R.string.sending_on_server_error);
         } catch (IOException e) {
             return new ErrorResult(R.string.server_error, e);
         }
